@@ -2,7 +2,7 @@ type Pokemon {
   id: ID!
   name: String!
   type: String!
-  league: League!
+  league: League
 }
 
 type Query {
