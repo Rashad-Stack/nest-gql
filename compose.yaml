@@ -1,0 +1,41 @@
+version: "3.9"
+services:
+  api:
+    container_name: nest-api
+    build: .
+    command: npm run start:dev
+    restart: unless-stopped
+    # env_file:
+    #   - /.env
+    environment:
+      - DB_URL=postgresql://postgres:8924@postgres:5432/api
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+        - action: rebuild
+          path: package-lock.json
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: postgres_db
+    image: postgres
+    restart: unless-stopped
+    volumes:
+      - postgres_dbv:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=api
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=8924
+    ports:
+      - "5434:5432"
+volumes:
+  postgres_dbv: {}
