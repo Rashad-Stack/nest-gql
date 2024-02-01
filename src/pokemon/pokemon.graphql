@@ -11,7 +11,8 @@ type Query {
 }
 
 type Mutation {
-  createPokemon(name: String!, type: String!, league: ID!): Pokemon!
-  updatePokemon(id: ID!, name: String, type: String, league: ID): Pokemon!
+  createPokemon(name: String!, type: String!, pokedex: Int!): Pokemon!
+  updatePokemon(id: ID!, name: String, type: String, pokedex: Int): Pokemon!
   deletePokemon(id: ID!): Boolean!
+  assign(pokemon: ID!, league: ID!): Pokemon!
 }

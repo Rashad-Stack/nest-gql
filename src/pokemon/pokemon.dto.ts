@@ -13,8 +13,10 @@ export class PokemonInputDto {
   @Field()
   type: string;
 
+  @MinLength(2)
+  @MaxLength(400)
   @Field()
-  leagueId: string;
+  pokedex: number;
 }
 
 @InputType()
@@ -29,6 +31,8 @@ export class PokemonUpdateInputDto {
   @Field()
   type?: string;
 
+  @MinLength(2)
+  @MaxLength(400)
   @Field()
-  leagueId?: string;
+  pokedex?: number;
 }

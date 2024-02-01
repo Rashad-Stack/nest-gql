@@ -12,7 +12,7 @@ export class LeagueEntity extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column("varchar", { length: 500, nullable: false, unique: true })
+  @Column("varchar", { length: 500, unique: true })
   name: string;
 
   @OneToMany(() => PokemonEntity, (pokemon) => pokemon.league)

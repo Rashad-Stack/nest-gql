@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { PokemonInputDto, PokemonUpdateInputDto } from "./pokemon.dto";
+import { PokemonUpdateInputDto } from "./pokemon.dto";
 import { PokemonEntity } from "./pokemon.entity";
 import { PokemonService } from "./pokemon.service";
 
@@ -20,8 +20,17 @@ export class PokemonResolver {
 
   // Mutations
   @Mutation(() => PokemonEntity)
-  async createPokemon(@Args("pokemon") pokemon: PokemonInputDto) {
-    return await this.pokemonService.create(pokemon);
+  async createPokemon(
+    @Args("name") name,
+    @Args("type") type,
+    @Args("pokedex") pokedex,
+  ) {
+    return await this.pokemonService.create({ name, type, pokedex });
+  }
+
+  @Mutation(() => PokemonEntity)
+  async assign(@Args("id") id: string, @Args("leagueId") leagueId: string) {
+    return await this.pokemonService.assignLeague(id, leagueId);
   }
 
   @Mutation()
