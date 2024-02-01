@@ -3,8 +3,6 @@ import { Module } from "@nestjs/common";
 import { GraphQLModule } from "@nestjs/graphql";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { join } from "path";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
 import { LeagueEntity } from "./league/league.entity";
 import { LeagueModule } from "./league/league.module";
 import { PokemonEntity } from "./pokemon/pokemon.entity";
@@ -45,7 +43,7 @@ import { PokemonModule } from "./pokemon/pokemon.module";
 
     LeagueModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
