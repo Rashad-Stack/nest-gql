@@ -1,26 +1,45 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 import { CreateProjectInput } from "./dto/create-project.input";
 import { UpdateProjectInput } from "./dto/update-project.input";
+import { Project } from "./entities/project.entity";
 
 @Injectable()
 export class ProjectService {
-  create(createProjectInput: CreateProjectInput) {
-    return "This action adds a new project";
+  constructor(
+    @InjectRepository(Project)
+    private readonly projectRepository: Repository<Project>,
+  ) {}
+  async create(createProjectInput: CreateProjectInput): Promise<Project> {
+    return await this.projectRepository.save(createProjectInput);
   }
 
-  findAll() {
-    return `This action returns all project`;
+  async findAll(): Promise<Project[]> {
+    return await this.projectRepository.find();
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} project`;
+  async findOne(id: string): Promise<Project> {
+    const project = await this.projectRepository.findOne({ where: { id } });
+    if (!project) {
+      throw new NotFoundException(`Project #${id} not found`);
+    }
+    return project;
   }
 
-  update(id: string, updateProjectInput: UpdateProjectInput) {
-    return `This action updates a #${id} project`;
+  async update(
+    id: string,
+    updateProjectInput: UpdateProjectInput,
+  ): Promise<Project> {
+    const project = await this.findOne(id);
+    await this.projectRepository.update(project.id, updateProjectInput);
+    await this.projectRepository.save(project);
+    return await this.findOne(project.id);
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} project`;
+  async remove(id: string): Promise<boolean> {
+    const project = await this.findOne(id);
+    await this.projectRepository.delete(project.id);
+    return true;
   }
 }

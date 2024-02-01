@@ -6,5 +6,5 @@ export class CreateProjectInput {
   name: string;
 
   @Field()
-  code: string;
+  code: number;
 }

@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { Field, Int, ObjectType } from "@nestjs/graphql";
 import { Employee } from "src/employee/entities/employee.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
@@ -13,11 +13,11 @@ export class Project {
   @Column()
   name: string;
 
-  @Field()
+  @Field(() => Int)
   @Column()
   code: number;
 
   @OneToMany(() => Employee, (employee) => employee.project)
-  @Field(() => [Project], { nullable: true })
+  @Field(() => [Employee], { nullable: true })
   employees: Employee[];
 }

@@ -10,5 +10,5 @@ export class UpdateProjectInput extends PartialType(CreateProjectInput) {
   name: string;
 
   @Field()
-  code: string;
+  code: number;
 }
