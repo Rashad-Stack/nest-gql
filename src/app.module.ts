@@ -3,10 +3,9 @@ import { Module } from "@nestjs/common";
 import { GraphQLModule } from "@nestjs/graphql";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { join } from "path";
-import { LeagueEntity } from "./league/league.entity";
-import { LeagueModule } from "./league/league.module";
-import { PokemonEntity } from "./pokemon/pokemon.entity";
-import { PokemonModule } from "./pokemon/pokemon.module";
+import { CategoryModule } from "./category/category.module";
+import { ProjectModule } from "./project/project.module";
+import { EmployeeModule } from "./employee/employee.module";
 
 @Module({
   imports: [
@@ -18,7 +17,7 @@ import { PokemonModule } from "./pokemon/pokemon.module";
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [PokemonEntity, LeagueEntity],
+      entities: [],
       synchronize: true,
     }),
 
@@ -28,21 +27,23 @@ import { PokemonModule } from "./pokemon/pokemon.module";
       include: [],
       context: ({ req }) => ({ headers: req.headers }),
 
-      // Schema First
-      // autoSchemaFile: join(process.cwd(), "src/schema.gql"),
-      // sortSchema: true,
-
       // Code first
-      typePaths: ["./**/*.graphql"],
-      definitions: {
-        path: join(process.cwd(), "src/graphql.schema.ts"),
-        outputAs: "class",
-      },
+      autoSchemaFile: join(process.cwd(), "src/schema.gql"),
+      sortSchema: true,
+
+      // Schema First
+      // typePaths: ["./**/*.graphql"],
+      // definitions: {
+      //   path: join(process.cwd(), "src/graphql.schema.ts"),
+      //   outputAs: "class",
+      // },
     }),
 
-    PokemonModule,
+    CategoryModule,
 
-    LeagueModule,
+    ProjectModule,
+
+    EmployeeModule,
   ],
   controllers: [],
   providers: [],
