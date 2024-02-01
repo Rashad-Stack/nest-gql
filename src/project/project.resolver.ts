@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { CreateProjectInput } from "./dto/create-project.input";
 import { UpdateProjectInput } from "./dto/update-project.input";
 import { Project } from "./entities/project.entity";
@@ -15,13 +15,13 @@ export class ProjectResolver {
     return this.projectService.create(createProjectInput);
   }
 
-  @Query(() => [Project], { name: "project" })
+  @Query(() => [Project], { name: "projects" })
   findAll() {
     return this.projectService.findAll();
   }
 
   @Query(() => Project, { name: "project" })
-  findOne(@Args("id", { type: () => Int }) id: string) {
+  findOne(@Args("id") id: string) {
     return this.projectService.findOne(id);
   }
 
@@ -36,7 +36,7 @@ export class ProjectResolver {
   }
 
   @Mutation(() => Project)
-  removeProject(@Args("id", { type: () => Int }) id: string) {
+  removeProject(@Args("id") id: string) {
     return this.projectService.remove(id);
   }
 }
