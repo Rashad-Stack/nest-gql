@@ -12,6 +12,7 @@ import { PokemonModule } from "./pokemon/pokemon.module";
   imports: [
     TypeOrmModule.forRoot({
       type: "postgres",
+      logging: true,
       host: process.env.DB_HOST,
       port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 5432,
       username: process.env.DB_USERNAME,
