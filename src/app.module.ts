@@ -4,8 +4,11 @@ import { GraphQLModule } from "@nestjs/graphql";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { join } from "path";
 import { CategoryModule } from "./category/category.module";
-import { ProjectModule } from "./project/project.module";
+import { Category } from "./category/entities/category.entity";
 import { EmployeeModule } from "./employee/employee.module";
+import { Employee } from "./employee/entities/employee.entity";
+import { Project } from "./project/entities/project.entity";
+import { ProjectModule } from "./project/project.module";
 
 @Module({
   imports: [
@@ -17,7 +20,7 @@ import { EmployeeModule } from "./employee/employee.module";
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [],
+      entities: [Employee, Project, Category],
       synchronize: true,
     }),
 
