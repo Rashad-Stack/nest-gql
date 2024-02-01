@@ -5,19 +5,21 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { join } from "path";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
+import { LeagueEntity } from "./league/league.entity";
 import { LeagueModule } from "./league/league.module";
+import { PokemonEntity } from "./pokemon/pokemon.entity";
 import { PokemonModule } from "./pokemon/pokemon.module";
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: "postgres",
-      host: "postgres",
-      port: 5432,
-      username: "postgres",
-      password: "8924",
-      database: "api",
-      entities: [__dirname + "/../**/*.entity{.ts,.js}"],
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 5432,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      entities: [PokemonEntity, LeagueEntity],
       synchronize: true,
     }),
 
